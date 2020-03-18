@@ -1,7 +1,7 @@
 const xss = require("xss");
 
 const postsService = {
-  getAllposts(db) {
+  getAllPosts(db) {
     return db
       .from("memoir_posts AS art")
       .select(
@@ -31,12 +31,12 @@ const postsService = {
 
   getById(db, id) {
     return postsService
-      .getAllposts(db)
+      .getAllPosts(db)
       .where("art.id", id)
       .first();
   },
 
-  getCommentsForpost(db, post_id) {
+  getCommentsForPost(db, post_id) {
     return db
       .from("memoir_comments AS comm")
       .select(
@@ -64,7 +64,7 @@ const postsService = {
       .groupBy("comm.id", "usr.id");
   },
 
-  serializepost(post) {
+  serializePost(post) {
     const { author } = post;
     return {
       id: post.id,
@@ -84,7 +84,7 @@ const postsService = {
     };
   },
 
-  serializepostComment(comment) {
+  serializePostComment(comment) {
     const { user } = comment;
     return {
       id: comment.id,
