@@ -15,7 +15,7 @@ const postsService = {
           `json_strip_nulls(
             json_build_object(
               'id', usr.id,
-              'user_name', usr.user_name,
+              'username', usr.username,
               'full_name', usr.full_name,
               'nickname', usr.nickname,
               'date_created', usr.date_created,
@@ -49,7 +49,7 @@ const postsService = {
               (SELECT tmp FROM (
                 SELECT
                   usr.id,
-                  usr.user_name,
+                  usr.username,
                   usr.full_name,
                   usr.nickname,
                   usr.date_created,
@@ -75,7 +75,7 @@ const postsService = {
       number_of_comments: Number(post.number_of_comments) || 0,
       author: {
         id: author.id,
-        user_name: author.user_name,
+        username: author.username,
         full_name: author.full_name,
         nickname: author.nickname,
         date_created: new Date(author.date_created),
@@ -93,7 +93,7 @@ const postsService = {
       date_created: new Date(comment.date_created),
       user: {
         id: user.id,
-        user_name: user.user_name,
+        username: user.username,
         full_name: user.full_name,
         nickname: user.nickname,
         date_created: new Date(user.date_created),

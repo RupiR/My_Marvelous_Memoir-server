@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe("Users Endpoints", function() {
+describe("Users Endpoints", function () {
   let db;
 
   const { testUsers } = helpers.makepostsFixtures();
@@ -27,11 +27,11 @@ describe("Users Endpoints", function() {
     context(`User Validation`, () => {
       beforeEach("insert users", () => helpers.seedUsers(db, testUsers));
 
-      const requiredFields = ["user_name", "password", "full_name"];
+      const requiredFields = ["username", "password", "full_name"];
 
       requiredFields.forEach(field => {
         const registerAttemptBody = {
-          user_name: "test user_name",
+          username: "test username",
           password: "test password",
           full_name: "test full_name",
           nickname: "test nickname"
@@ -51,7 +51,7 @@ describe("Users Endpoints", function() {
 
       it(`responds 400 'Password be longer than 8 characters' when empty password`, () => {
         const userShortPassword = {
-          user_name: "test user_name",
+          username: "test username",
           password: "1234567",
           full_name: "test full_name"
         };
@@ -63,7 +63,7 @@ describe("Users Endpoints", function() {
 
       it(`responds 400 'Password be less than 72 characters' when long password`, () => {
         const userLongPassword = {
-          user_name: "test user_name",
+          username: "test username",
           password: "*".repeat(73),
           full_name: "test full_name"
         };
@@ -75,7 +75,7 @@ describe("Users Endpoints", function() {
 
       it(`responds 400 error when password starts with spaces`, () => {
         const userPasswordStartsSpaces = {
-          user_name: "test user_name",
+          username: "test username",
           password: " 1Aa!2Bb@",
           full_name: "test full_name"
         };
@@ -89,7 +89,7 @@ describe("Users Endpoints", function() {
 
       it(`responds 400 error when password ends with spaces`, () => {
         const userPasswordEndsSpaces = {
-          user_name: "test user_name",
+          username: "test username",
           password: "1Aa!2Bb@ ",
           full_name: "test full_name"
         };
@@ -103,7 +103,7 @@ describe("Users Endpoints", function() {
 
       it(`responds 400 error when password isn't complex enough`, () => {
         const userPasswordNotComplex = {
-          user_name: "test user_name",
+          username: "test username",
           password: "11AAaabb",
           full_name: "test full_name"
         };
@@ -115,9 +115,9 @@ describe("Users Endpoints", function() {
           });
       });
 
-      it(`responds 400 'User name already taken' when user_name isn't unique`, () => {
+      it(`responds 400 'User name already taken' when username isn't unique`, () => {
         const duplicateUser = {
-          user_name: testUser.user_name,
+          username: testUser.username,
           password: "11AAaa!!",
           full_name: "test full_name"
         };
@@ -131,7 +131,7 @@ describe("Users Endpoints", function() {
     context(`Happy path`, () => {
       it(`responds 201, serialized user, storing bcryped password`, () => {
         const newUser = {
-          user_name: "test user_name",
+          username: "test username",
           password: "11AAaa!!",
           full_name: "test full_name"
         };
@@ -141,7 +141,7 @@ describe("Users Endpoints", function() {
           .expect(201)
           .expect(res => {
             expect(res.body).to.have.property("id");
-            expect(res.body.user_name).to.eql(newUser.user_name);
+            expect(res.body.username).to.eql(newUser.username);
             expect(res.body.full_name).to.eql(newUser.full_name);
             expect(res.body.nickname).to.eql("");
             expect(res.body).to.not.have.property("password");
@@ -159,7 +159,7 @@ describe("Users Endpoints", function() {
               .where({ id: res.body.id })
               .first()
               .then(row => {
-                expect(row.user_name).to.eql(newUser.user_name);
+                expect(row.username).to.eql(newUser.username);
                 expect(row.full_name).to.eql(newUser.full_name);
                 expect(row.nickname).to.eql(null);
                 const expectedDate = new Date().toLocaleString("en", {

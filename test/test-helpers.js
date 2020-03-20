@@ -5,7 +5,7 @@ function makeUsersArray() {
   return [
     {
       id: 1,
-      user_name: "test-user-1",
+      username: "test-user-1",
       full_name: "Test user 1",
       nickname: "TU1",
       password: "password",
@@ -13,7 +13,7 @@ function makeUsersArray() {
     },
     {
       id: 2,
-      user_name: "test-user-2",
+      username: "test-user-2",
       full_name: "Test user 2",
       nickname: "TU2",
       password: "password",
@@ -21,7 +21,7 @@ function makeUsersArray() {
     },
     {
       id: 3,
-      user_name: "test-user-3",
+      username: "test-user-3",
       full_name: "Test user 3",
       nickname: "TU3",
       password: "password",
@@ -29,7 +29,7 @@ function makeUsersArray() {
     },
     {
       id: 4,
-      user_name: "test-user-4",
+      username: "test-user-4",
       full_name: "Test user 4",
       nickname: "TU4",
       password: "password",
@@ -149,7 +149,7 @@ function makeExpectedpost(users, post, comments = []) {
     number_of_comments,
     author: {
       id: author.id,
-      user_name: author.user_name,
+      username: author.username,
       full_name: author.full_name,
       nickname: author.nickname,
       date_created: author.date_created.toISOString(),
@@ -171,7 +171,7 @@ function makeExpectedpostComments(users, postId, comments) {
       date_created: comment.date_created.toISOString(),
       user: {
         id: commentUser.id,
-        user_name: commentUser.user_name,
+        username: commentUser.username,
         full_name: commentUser.full_name,
         nickname: commentUser.nickname,
         date_created: commentUser.date_created.toISOString(),
@@ -277,7 +277,7 @@ function seedMaliciouspost(db, user, post) {
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
-    subject: user.user_name,
+    subject: user.username,
     algorithm: "HS256"
   });
   return `Bearer ${token}`;

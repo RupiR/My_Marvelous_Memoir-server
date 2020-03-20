@@ -15,7 +15,7 @@ const CommentsService = {
               (SELECT tmp FROM (
                 SELECT
                   usr.id,
-                  usr.user_name,
+                  usr.username,
                   usr.full_name,
                   usr.nickname,
                   usr.date_created,
@@ -48,7 +48,7 @@ const CommentsService = {
       date_created: new Date(comment.date_created),
       user: {
         id: user.id,
-        user_name: user.user_name,
+        username: user.username,
         full_name: user.full_name,
         nickname: user.nickname,
         date_created: new Date(user.date_created),

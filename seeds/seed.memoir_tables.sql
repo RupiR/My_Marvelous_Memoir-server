@@ -6,7 +6,7 @@ TRUNCATE
   memoir_users
   RESTART IDENTITY CASCADE;
 
-INSERT INTO memoir_users (user_name, full_name, nickname, password)
+INSERT INTO memoir_users (username, full_name, nickname, password)
 VALUES
   ('dunder', 'Dunder Mifflin', null, '$2a$12$lHK6LVpc15/ZROZcKU00QeiD.RyYq5dVlV/9m4kKYbGibkRc5l4Ne'),
   ('b.deboop', 'Bodeep Deboop', 'Bo', '$2a$12$VQ5HgWm34QQK2rJyLc0lmu59cy2jcZiV6U1.bE8rBBnC9VxDf/YQO'),
