@@ -1,8 +1,10 @@
 const express = require("express");
+const path = require("path");
 const PostsService = require("./posts-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 
 const postsRouter = express.Router();
+const jsonBodyParser = express.json();
 
 postsRouter.route("/").get((req, res, next) => {
   PostsService.getAllPosts(req.app.get("db"))
@@ -10,7 +12,29 @@ postsRouter.route("/").get((req, res, next) => {
       res.json(posts.map(PostsService.serializePost));
     })
     .catch(next);
-});
+})
+
+  .post(requireAuth, jsonBodyParser, (req, res, next) => {
+    const { title, summary, type } = req.body;
+    const newPost = { title, summary, posttype: type };
+
+    for (const [key, value] of Object.entries(newPost))
+      if (value == null)
+        return res.status(400).json({
+          error: `Missing '${key}' in request body`
+        });
+
+    newPost.author_id = req.user.id;
+
+    PostsService.insertPost(req.app.get("db"), newPost)
+      .then(post => {
+        res
+          .status(201)
+          .location(path.posix.join(req.originalUrl, `/${post.id}`))
+          .json(PostsService.serializePost(post));
+      })
+      .catch(next);
+  });
 
 postsRouter
   .route("/:post_id")
@@ -18,7 +42,12 @@ postsRouter
   .all(checkPostExists)
   .get((req, res) => {
     res.json(PostsService.serializePost(res.post));
-  });
+  })
+
+  .delete((req, res) => {
+    PostsService.deletePost(req.app.get("db"), req.params.post_id)
+      .then(r => res.send("Post was deleted"));
+  })
 
 postsRouter
   .route("/:post_id/comments/")

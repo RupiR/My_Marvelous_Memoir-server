@@ -1,6 +1,6 @@
 const xss = require("xss");
 
-const postsService = {
+const PostsService = {
   getAllPosts(db) {
     return db
       .from("memoir_posts AS art")
@@ -8,8 +8,8 @@ const postsService = {
         "art.id",
         "art.title",
         "art.date_created",
-        "art.style",
-        "art.content",
+        "art.posttype",
+        "art.summary",
         db.raw(`count(DISTINCT comm) AS number_of_comments`),
         db.raw(
           `json_strip_nulls(
@@ -29,12 +29,28 @@ const postsService = {
       .groupBy("art.id", "usr.id");
   },
 
+  insertPost(db, newPost) {
+    return db
+      .insert(newPost)
+      .into("memoir_posts")
+      .returning("*")
+      .then(([post]) => post)
+      .then(post => PostsService.getById(db, post.id));
+  },
+
   getById(db, id) {
-    return postsService
+    return PostsService
       .getAllPosts(db)
       .where("art.id", id)
       .first();
   },
+
+  deletePost(db, id) {
+    return db("memoir_posts")
+      .where("id", id)
+      .del();
+  },
+
 
   getCommentsForPost(db, post_id) {
     return db
@@ -68,9 +84,9 @@ const postsService = {
     const { author } = post;
     return {
       id: post.id,
-      style: post.style,
+      posttype: post.posttype,
       title: xss(post.title),
-      content: xss(post.content),
+      summary: xss(post.summary),
       date_created: new Date(post.date_created),
       number_of_comments: Number(post.number_of_comments) || 0,
       author: {
@@ -103,4 +119,4 @@ const postsService = {
   }
 };
 
-module.exports = postsService;
+module.exports = PostsService;

@@ -115,7 +115,7 @@ describe("Users Endpoints", function () {
           });
       });
 
-      it(`responds 400 'User name already taken' when username isn't unique`, () => {
+      it(`responds 400 'Username already taken' when username isn't unique`, () => {
         const duplicateUser = {
           username: testUser.username,
           password: "11AAaa!!",
