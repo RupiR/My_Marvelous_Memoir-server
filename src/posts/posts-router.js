@@ -49,6 +49,28 @@ postsRouter
       .then(r => res.send("Post was deleted"));
   })
 
+  .put(requireAuth, jsonBodyParser, (req, res, next) => {
+    const { title, summary, type } = req.body;
+    const newPost = { title, summary, posttype: type };
+
+    for (const [key, value] of Object.entries(newPost))
+      if (value == null)
+        return res.status(400).json({
+          error: `Missing '${key}' in request body`
+        });
+
+    newPost.author_id = req.user.id;
+
+    PostsService.updatePost(req.app.get("db"), newPost, req.params.post_id)
+      .then(post => {
+        res
+          .status(200)
+          .location(path.posix.join(req.originalUrl, `/${post.id}`))
+          .json(PostsService.serializePost(post));
+      })
+      .catch(next);
+  });
+
 postsRouter
   .route("/:post_id/comments/")
   .all(requireAuth)

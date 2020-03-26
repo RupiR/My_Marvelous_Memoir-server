@@ -51,6 +51,13 @@ const PostsService = {
       .del();
   },
 
+  updatePost(db, newpost, id) {
+    return db("memoir_posts")
+      .where({ id: id })
+      .update(newpost)
+      .then(post => PostsService.getById(db, id));
+  },
+
 
   getCommentsForPost(db, post_id) {
     return db
