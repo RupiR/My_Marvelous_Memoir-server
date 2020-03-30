@@ -51,10 +51,10 @@ const PostsService = {
       .del();
   },
 
-  updatePost(db, newpost, id) {
+  updatePost(db, newPost, id) {
     return db("memoir_posts")
       .where({ id: id })
-      .update(newpost)
+      .update(newPost)
       .then(post => PostsService.getById(db, id));
   },
 
