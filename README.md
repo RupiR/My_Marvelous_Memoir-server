@@ -1,31 +1,35 @@
-# My Marvelous Memoir by Rupali Rajput!
+# My Marvelous Memoir
 
-## Scripts
+An online personal diary app that allows you to create daily posts which you can edit and delete at anytime.
 
-Start the application `npm start`
+## Purpose
 
-Start nodemon for the application `npm run dev`
+It has proven over and over again that keeping a journal/private dairy has been effective in helping with anxiety. As someone who suffers from anxiety myself, I wanted to create an app to help people suffering from stress/anxiety that they could use from anywhere.
 
-Run the tests in watch mode `npm test`
+## Recommended Usage
 
-Migrate the dev database `npm run migrate`
+For testing purposes, I recommend you test our web app with the following login credentials -
 
-Migrate the test database `npm run migrate:test`
+- Username: Demouser
+- Password: Demo1234!
 
-## Configuring Postgres
+## Built With
 
-For tests involving time to run properly, configure your Postgres database to run in the UTC timezone.
+- HTML5
+- CSS3
+- Javascript
+- jQuery
+- React
+- PostgreSQL
+- Express
+- Node.js
+- JWT
+- Heroku/Zeit
 
-1. Locate the `postgresql.conf` file for your Postgres installation.
-   1. E.g. for an OS X, Homebrew install: `/usr/local/var/postgres/postgresql.conf`
-   2. E.g. on Windows, _maybe_: `C:\Program Files\PostgreSQL\11.2\data\postgresql.conf`
-2. Find the `timezone` line and set it to `UTC`:
+## Demo
 
-```conf
-# - Locale and Formatting -
+- [Live Demo](https://mymarvelousmemoir.now.sh/)
 
-datestyle = 'iso, mdy'
-#intervalstyle = 'postgres'
-timezone = 'UTC'
-#timezone_abbreviations = 'Default'     # Select the set of available time zone
-```
+## Author
+
+- **Rupali Rajput** - Front-End development / Back-End development / Styling
