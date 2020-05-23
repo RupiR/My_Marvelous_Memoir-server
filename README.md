@@ -23,6 +23,28 @@ Post Example:
 
 ![Post Entries](screenshots/postscreenshot.PNG)
 
+## API Documentation
+
+API endpoints
+
+- POST to '/api/auth/login' authenticate and login returning user
+- POST to '/api/auth/refresh' refresh Auth token
+- POST to '/api/users' posts new user info into database
+- GET to '/api/users' get all users from database
+- GET to '/api/user/:id' get all stories by id
+- DELETE to '/api/user/:id' delete a user by id
+- PATCH to '/api/user/:id' update a user by id
+- GET to '/api/post' get all posts from database
+- POST to '/api/post' posts a post to the database
+- GET to '/api/post/:id' get all posts by id
+- DELETE to '/api/post/:id' delete a post by id
+- PATCH to '/api/post/:id' update a post by id
+- GET to '/api/comment' get all comments from database
+- POST to '/api/comment' posts a comment to the database
+- GET to '/api/comment/:id' get all comments by id
+- DELETE to '/api/comment/:id' delete a comment by id
+- PATCH to '/api/comment/:id' update a comment by id
+
 ## Built With
 
 - HTML5
@@ -42,4 +64,4 @@ Post Example:
 
 ## Author
 
-- **Rupali Rajput** - Front-End development / Back-End development / Styling
+- [**Rupali Rajput**](https://github.com/RupiR) - Front-End development / Back-End development / Styling
