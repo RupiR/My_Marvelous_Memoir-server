@@ -1,9 +1,9 @@
-const express = require('express')
-const AuthService = require('./auth-service')
-const { requireAuth } = require('../middleware/jwt-auth')
+const express = require('express');
+const AuthService = require('./auth-service');
+const { requireAuth } = require('../middleware/jwt-auth');
 
-const authRouter = express.Router()
-const jsonBodyParser = express.json()
+const authRouter = express.Router();
+const jsonBodyParser = express.json();
 
 authRouter
   .post('/login', jsonBodyParser, (req, res, next) => {
@@ -14,7 +14,7 @@ authRouter
       if (value == null)
         return res.status(400).json({
           error: `Missing '${key}' in request body`
-        })
+        });
 
     AuthService.getUserWithUserName(
       req.app.get('db'),
@@ -42,7 +42,7 @@ authRouter
           })
       })
       .catch(next)
-  })
+  });
 
 authRouter.post('/refresh', requireAuth, (req, res) => {
   const sub = req.user.username
@@ -50,6 +50,6 @@ authRouter.post('/refresh', requireAuth, (req, res) => {
   res.send({
     authToken: AuthService.createJwt(sub, payload),
   })
-})
+});
 
-module.exports = authRouter
+module.exports = authRouter;
